@@ -3,7 +3,7 @@ import { postApiRequest } from "../../utills/requests";
 import {useNavigate} from "react-router-dom";
 import {InputComponent} from "../../components/InputComponent";
 
-export const LoginPage = () => {
+export const LoginPage = (props) => {
     const [idValue, setIdValue] = useState("");
     const [passwordValue, setPasswordValue] = useState("");
     const [loginError, setLoginError] = useState(null);
@@ -11,19 +11,21 @@ export const LoginPage = () => {
     const navigate = useNavigate();
 
 
-    const onClickLogin = useCallback(async() => {
+    const onClickLogin = async() => {
+        // Проверяем, валидность введенных данных, если все ок - отправляем пользователя на страницу аккаунта
         try {
             const response = await postApiRequest('', {}, { pin: +idValue, password: passwordValue });
             const response_data = await response.json();
             if (!response_data.error) {
-                navigate('account');
+                props.updateAccounts()
+                navigate('/v2/account');
             } else {
                 setLoginError(response_data.error);
                 setPasswordValue("");
             }
         } catch (error) {
         }
-    }, [idValue, passwordValue, navigate])
+    }
 
     return (
         <>

@@ -18,7 +18,7 @@ const getConfig = () => {
     }
 
     return {
-        apiUrl: 'http://127.0.0.1:8000/cln-v2/api',
+        apiUrl: 'https://rbychin.ddns.net/cln-v2/api',
         user: user,
         tgWindow: tgWindow
     }

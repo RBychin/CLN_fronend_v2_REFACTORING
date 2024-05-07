@@ -167,6 +167,14 @@ a {
   color: var(--hint-color);
 }
 
+.centered {
+  width: 100%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .error-text {
   color: var(--error-color-text);
 }
@@ -182,6 +190,11 @@ a {
 
 .vh-100 {
   height: 100vh;
+}
+
+.vh-90 {
+  height: 90vh;
+  background-color: #007aff;
 }
 
 .vh-30 {

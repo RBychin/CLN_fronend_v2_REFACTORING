@@ -15,12 +15,12 @@ export const AccountPage = (props) => {
     const [login, setLogin] = useState(null);
     const [transactions, setTransactions] = useState(null);
     const [stories, setStories] = useState([]);
-    const[userImage, setUserImage] = useState(null);
+    const[user, setUser] = useState(null);
 
     useEffect(() => {
         getTransaction().then(r => setTransactions(r))
         getStories().then(r => setStories(r))
-        getProfile().then(r => setUserImage(r?.image));
+        getProfile().then(r => setUser(r));
     }, []);
 
 
@@ -31,7 +31,7 @@ export const AccountPage = (props) => {
     return (
             <>
                 <BlockMain label={''} gradient={'gradient-background'}>
-                    <AccountHeader userImage={userImage}/>
+                    <AccountHeader user={user}/>
                 </BlockMain>
 
                 <BlockMain gradient={'gradient-end'} label={'Узнай больше'}>

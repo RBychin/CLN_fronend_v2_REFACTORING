@@ -13,7 +13,7 @@ export const StoriesSwiper = ({ storyList, updateStories }) => {
 
     const getLineWidth = useCallback(() => {
         const block = document.getElementById('storiesLine');
-        setLineWidth(Math.min(Math.floor(block.offsetWidth / 80), storyList.length));
+        setLineWidth(Math.min(Math.floor(block.offsetWidth / 95), storyList.length));
     },[storyList])
 
     useEffect(() => {

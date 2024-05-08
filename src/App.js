@@ -6,6 +6,7 @@ import {LoginPage} from "./pages/loginPage/loginPage";
 import {AccountPage} from "./pages/accountPage/accountPage";
 import {LoadingPage} from "./pages/LoadingPage/LoadingPage";
 import {ErrorPage} from "./pages/ErrorPage/ErrorPage";
+import {Config} from "./utills/config";
 
 function App() {
 
@@ -34,6 +35,7 @@ function App() {
 
     useEffect(() => {
         fetchData()
+        Config.tgWindow.expand()
     }, []);
 
 

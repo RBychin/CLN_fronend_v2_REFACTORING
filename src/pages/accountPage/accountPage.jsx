@@ -8,12 +8,13 @@ import {AccountsCard} from "../../components/AccountCard";
 import {BlockMain} from "../../components/BlockMain";
 import {getProfile, getStories, getTransaction} from "../../utills/getInfo";
 import {Transactions} from "../../components/Transactions";
+import {PointCard} from "../../components/PointCard";
 
 
 export const AccountPage = (props) => {
     const navigate = useNavigate();
     const [login, setLogin] = useState(null);
-    const [transactions, setTransactions] = useState(null);
+    const [transactions, setTransactions] = useState([]);
     const [stories, setStories] = useState([]);
     const[user, setUser] = useState(null);
 
@@ -34,31 +35,42 @@ export const AccountPage = (props) => {
                     <AccountHeader user={user}/>
                 </BlockMain>
 
-                <BlockMain gradient={'gradient-end'} label={'Узнай больше'}>
+                {stories.length > 0 && <BlockMain gradient={'gradient-end'} label={'Узнай больше'}>
                     <StoriesList stories={stories} setStories={setStories} />
-                </BlockMain>
+                </BlockMain>}
+                {Object.values(props.accounts).map((point, index) => (
+                    <BlockMain gradient={''} label={`Аккаунт ID: ${point.pin}`}>
+                        <PointCard key={index}
+                                          callback={props.fetchData}
+                                          point={point}
+                                          status={!point.error}
+                                          accountName={'asdasd'}
+                            />
 
-                <BlockMain gradient={''} label={'Аккаунт'}>
-                    {Object.values(props.accounts).map((point, index) => (
-                        <AccountsCard key={index}
-                                      callback={props.fetchData}
-                                      point={point}
-                                      status={!point.error}
-                                      accountName={point.error?point.error: Object.keys(point.points)[0]}
-                        />
-                    ))}
-                    <div className={`container-login ${login ? 'show' : ''}`}>
-                        <div onClick={() => {navigate('/v2/login')}}>Добавить аккаунт</div>
-                    </div>
+                    </BlockMain>
+                ))}
+                <BlockMain>
                     <div>
-                        <img onClick={() => {setLogin(!login)}} alt='add' className={`icon add-account vr-margin-10 bottom-margin-0 ${login? "rotate-45 active": ""}`} src={addAccIcon} />
+                        <img onClick={() => {
+                            setLogin(!login)
+                        }} alt='add'
+                             className={`icon add-account vr-margin-10 bottom-margin-0 ${login ? "rotate-45 active" : ""}`}
+                             src={addAccIcon}/>
+                        <div className={`container-login ${login ? 'show' : ''}`}>
+                            <div onClick={() => {
+                                navigate('/v2/login')
+                            }}>Добавить аккаунт
+                            </div>
+                        </div>
                     </div>
+
                 </BlockMain>
 
-                <BlockMain label={'История операций'} gradient={'gradient-end'}>
-                    <Transactions transactions={transactions} />
-                </BlockMain>
+
+                {transactions.length > 0 && <BlockMain label={'История операций'} gradient={'gradient-end'}>
+                    <Transactions transactions={transactions}/>
+                </BlockMain>}
             </>
-        )
+    )
 }
 

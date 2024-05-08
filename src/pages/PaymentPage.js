@@ -4,14 +4,9 @@ import {InputComponent} from "../components/InputComponent";
 import {Button} from "../components/Button";
 import {getApiRequest} from "../utills/requests";
 
-export const PaymentPage = ({
-                                point,
-                                account,
-                                setPay,
-                                pay
-                            }) => {
+export const PaymentPage = (props) => {
     const [responseData, setResponseData] = useState(null);
-    const [sumValue, setSum] = useState(+account.tarif.abon);
+    const [sumValue, setSum] = useState(500);
     const mainButton = Config.tgWindow.MainButton
 
     const getQr = async () => {
@@ -19,7 +14,7 @@ export const PaymentPage = ({
             mainButton.showProgress()
         }
         try {
-            const response = await getApiRequest('/pay', {pin: point.pin, sum: sumValue });
+            const response = await getApiRequest('/pay', {pin: props.point.pin, sum: sumValue });
             setResponseData(response.text);
         } catch (error) {
             console.error('Error fetching data:', error);
@@ -71,7 +66,7 @@ export const PaymentPage = ({
 
     return (
         <>
-            <div className="overlay margin-auto flex" onClick={() => {setPay(false)}}>
+            <div className="overlay margin-auto flex" onClick={() => {props.setpayShow(false)}}>
                 <div className="pay gradient-background"
                      onClick={(e) => {
                          e.stopPropagation()}

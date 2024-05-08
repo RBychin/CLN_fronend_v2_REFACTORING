@@ -298,6 +298,14 @@ a {
   border-bottom: var(--thin-border-color) solid 1px;
 }
 
+.border-solid {
+  border: solid 1px var(--thin-border-color);
+}
+
+.border-radius-10 {
+  border-radius: 10px;
+}
+
 .left-text {
   text-align: left;
   flex-grow: 1;
@@ -514,7 +522,7 @@ a {
 }
 
 .container.show {
-  max-height: 60px; /* Пример значения высоты. Укажите нужное вам */
+  max-height: 480px; /* Пример значения высоты. Укажите нужное вам */
 }
 
 .container-login {
@@ -528,7 +536,7 @@ a {
 .container-login.show {
   padding-bottom: 10px;
   padding-top: 30px;
-  max-height: 60px; /* Пример значения высоты. Укажите нужное вам */
+  max-height: 480px; /* Пример значения высоты. Укажите нужное вам */
 }
 
 .rotate-45 {
@@ -548,7 +556,7 @@ a {
   background-color: var(--menu-color);
   border: var(--thin-border-color) solid 1px;
   max-width: 480px;
-  padding: 10px;
+  padding: 8px;
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }

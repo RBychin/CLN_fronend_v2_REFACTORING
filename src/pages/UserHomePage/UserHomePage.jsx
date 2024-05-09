@@ -44,17 +44,16 @@ export const UserHomePage = (props) => {
                 {stories.length > 0 && <BlockMain gradient={'gradient-end'} label={'Узнай больше'}>
                     <StoriesList stories={stories} setStories={setStories} />
                 </BlockMain>}
+                <BlockMain gradient={''} label={`Аккаунты`}>
                 {Object.values(props.accounts).map((point, index) => (
-                    <BlockMain key={index} gradient={''} label={`Аккаунт ID: ${point.pin}`}>
-                        <PointCard key={index}
-                                          callback={props.fetchData}
-                                          point={point}
-                                          status={!point.error}
-                                          accountName={'asdasd'}
-                            />
-
-                    </BlockMain>
+                    <PointCard key={index}
+                                      callback={props.fetchData}
+                                      point={point}
+                                      status={!point.error}
+                                      accountName={'asdasd'}
+                        />
                 ))}
+                </BlockMain>
                 <BlockMain>
                     <div>
                         <img onClick={() => {

@@ -4,25 +4,31 @@ import React, {useEffect, useState} from "react";
 import addAccIcon from '../../icons/add_acc.svg'
 import {AccountHeader} from "../../components/AccountHeader";
 import {StoriesList} from "../../components/storiesList";
-import {AccountsCard} from "../../components/AccountCard";
 import {BlockMain} from "../../components/BlockMain";
 import {getProfile, getStories, getTransaction} from "../../utills/getInfo";
 import {Transactions} from "../../components/Transactions";
 import {PointCard} from "../../components/PointCard";
+import {Config} from "../../utills/config";
 
 
-export const AccountPage = (props) => {
+export const UserHomePage = (props) => {
     const navigate = useNavigate();
     const [login, setLogin] = useState(null);
     const [transactions, setTransactions] = useState([]);
     const [stories, setStories] = useState([]);
-    const[user, setUser] = useState(null);
+    const [user, setUser] = useState(null);
 
     useEffect(() => {
         getTransaction().then(r => setTransactions(r))
         getStories().then(r => setStories(r))
         getProfile().then(r => setUser(r));
     }, []);
+
+    useEffect(() => {
+        if (user && user.welcome_message && user.welcome_message.message) {
+            Config.tgWindow.showAlert(user.welcome_message.message, () => {});
+        }
+    }, [user]);
 
 
     if (!props.accounts) {
@@ -39,7 +45,7 @@ export const AccountPage = (props) => {
                     <StoriesList stories={stories} setStories={setStories} />
                 </BlockMain>}
                 {Object.values(props.accounts).map((point, index) => (
-                    <BlockMain gradient={''} label={`Аккаунт ID: ${point.pin}`}>
+                    <BlockMain key={index} gradient={''} label={`Аккаунт ID: ${point.pin}`}>
                         <PointCard key={index}
                                           callback={props.fetchData}
                                           point={point}
@@ -70,6 +76,9 @@ export const AccountPage = (props) => {
                 {transactions.length > 0 && <BlockMain label={'История операций'} gradient={'gradient-end'}>
                     <Transactions transactions={transactions}/>
                 </BlockMain>}
+                <BlockMain >
+                    <div className={'center hint'}>CLN 2024</div>
+                </BlockMain>
             </>
     )
 }

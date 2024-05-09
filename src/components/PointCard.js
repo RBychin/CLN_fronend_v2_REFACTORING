@@ -17,21 +17,32 @@ export const PointCard = (props) => {
     const [active, setActive] = useState(false)
     const [question, setQuestion] = useState(false)
     const [payShow, setpayShow] = useState(false)
-    const isActiveStyle = active?'slide-in': ''
 
     const onClickLogin = (idValue) => {
         navigate('/v2/login', {state: {idValue}})
     }
 
-    const onClickLogout= async () => {
-        const response = await getApiRequest(
-            '/logout',
-            {pin: props.point.pin},
-        )
-        props.callback()
-        setQuestion(false)
-        navigate('/v2/')
+    const Logout = async (accepted) => {
+        if (accepted) {
+            const response = await getApiRequest(
+                '/logout',
+                {pin: props.point.pin},
+            )
+            props.callback()
+            setQuestion(false)
+            navigate('/v2/')
+        }
     }
+
+
+    const onClickLogout = () => {
+        Config.tgWindow.showConfirm(
+            `Выйти из ${props.point.pin}?\nЭто так же удалит из приложения все связанные с этим ID аккаунты.`,
+            Logout)
+    }
+
+    // const onClickLogout= async () => {
+    //
 
     const style = props.status?'card vw-70 plate glow bottom-margin-0': 'card vw-70 plate bottom-margin-0 red-glow'
     return (
@@ -71,7 +82,7 @@ export const PointCard = (props) => {
             {props.status && (
                 <div className={`slide-menu vw-65 margin-auto container ${active ? 'show' : ''}`}>
                 {Object.values(props.point.points).map((account, index) => (
-                        <AccountCard status={props.status} account={account} key={index} />
+                        <AccountCard status={props.status} account={account} key={index} point={props.point} />
                     ))}
                     <div className={`grid`}>
                     <span className='center margin-auto' onClick={() => {setpayShow(true)}}>
@@ -85,7 +96,7 @@ export const PointCard = (props) => {
                             <p className='hint'>Настройки</p>
                         </a>
                     </span>
-                        <span className='center margin-auto' onClick={() => setQuestion(true)}>
+                        <span className='center margin-auto' onClick={onClickLogout}>
                         <a href="#">
                         <img alt="icon-small" className='icon-small' src={closeIcon}/>
                         <p className='hint'>Выйти</p>
@@ -102,7 +113,7 @@ export const PointCard = (props) => {
                         <img alt="icon-small" className='icon-small' src={plusIcon}/>
                         <p className='hint'>Войти</p>
                     </span>
-                        <span className='center margin-auto' onClick={() => setQuestion(true)}>
+                        <span className='center margin-auto' onClick={onClickLogout}>
                         <img alt="icon-small" className='icon-small' src={closeIcon}/>
                         <p className='hint'>Удалить</p>
                     </span>

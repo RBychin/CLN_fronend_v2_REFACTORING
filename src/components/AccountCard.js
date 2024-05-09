@@ -1,60 +1,35 @@
-import iconOk from '../icons/status-ok.svg'
-import iconPause from '../icons/status-pause.svg'
-import React, {useState} from "react";
-import settingsIcon from '../icons/settings.svg'
-import plusIcon from '../icons/plus.svg'
-import closeIcon from '../icons/cross-stop.svg'
+import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {getApiRequest} from "../utills/requests";
-import {Config} from "../utills/config";
-import {AgreeQuestion} from "./AgreeQuestion";
-import {PaymentPage} from "../pages/PaymentPage";
-import {PointCard} from "./PointCard";
+import {getSpeedLim} from "../utills/funcs";
 
 
 export const AccountCard = (props) => {
     const navigate = useNavigate()
-    const [active, setActive] = useState(false)
-    const [question, setQuestion] = useState(false)
-    const [pay, setPay] = useState(false)
-    const isActiveStyle = active?'slide-in': ''
-
-
-    // const host = point.points[Object.keys(point.points)[0]];
-    // const account = host.accounts[Object.keys(host.accounts)[0]];
-    // point.balance = +point.balance
-
-    const onClickLogin = (idValue) => {
-        navigate('/v2/login', {state: {idValue}})
-    }
-    // console.log(props.account)
-
-    // const onClickLogout= async () => {
-    //     const response = await getApiRequest(
-    //         '/logout',
-    //         {pin: props.account.pin},
-    //     )
-    //     props.callback()
-    //     setQuestion(false)
-    //     navigate('/v2/')
-    // }
+    const [speedLim, setSpeedLim] = useState('')
     const account = Object.values(props.account.accounts)[0]
+    const account_name = Object.keys(props.account.accounts)[0]
+    const point = props.point
+
+    const onClickAccount = () => {
+        navigate('/v2/account', {state: {account, account_name, point}})
+    }
+
     const style = props.status?'card vw-70 plate glow bottom-margin-0': 'card vw-70 plate bottom-margin-0 red-glow'
     if (!props.status) {
         return <></>
     }
 
     return (
-        <div className='vr-margin-10'>
+        <div className='vr-margin-10' onClick={onClickAccount}>
             <div className='vr-margin-10 border-bottom'>
                 <div className='grid'>
                     <span className='left-text hr-padd-10'>
-                            <p className='text-weight-500'>{Object.keys(props.account.accounts)[0]}</p>
+                            <p className='text-weight-500'>{account_name}</p>
                         <p><small>{account.IP}</small></p>
                         </span>
                     <span className='right-text'>
                             <p><small>{account.tarif.name}</small></p>
-                            <p><small>{account.speed_lim / 100} мб/с</small></p>
+                            <p><small>{getSpeedLim(account.speed_lim_actual)}</small></p>
                         </span>
                 </div>
             </div>

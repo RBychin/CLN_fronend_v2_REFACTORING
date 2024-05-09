@@ -3,10 +3,11 @@ import {useEffect, useState} from "react";
 import {Navigate, Route, Routes, useNavigate} from "react-router-dom";
 import {getApiRequest} from "./utills/requests";
 import {LoginPage} from "./pages/loginPage/loginPage";
-import {AccountPage} from "./pages/accountPage/accountPage";
+import {UserHomePage} from "./pages/UserHomePage/UserHomePage";
 import {LoadingPage} from "./pages/LoadingPage/LoadingPage";
 import {ErrorPage} from "./pages/ErrorPage/ErrorPage";
 import {Config} from "./utills/config";
+import {AccountPage} from "./pages/AccountPage/AccountPage";
 
 function App() {
 
@@ -21,7 +22,7 @@ function App() {
             const response = await getApiRequest('', {});
             if (!response.error && !response.detail) {
                 setAccounts(response);
-                navigate('/v2/account')
+                navigate('/v2/user')
             } else {
                 navigate('/v2/login');
             }
@@ -32,10 +33,14 @@ function App() {
             navigate('/v2/error');
             }
     };
+    const tgTest = async () => {
+    }
 
     useEffect(() => {
+        tgTest()
         fetchData()
         Config.tgWindow.expand()
+
     }, []);
 
 
@@ -58,7 +63,8 @@ function App() {
           <Routes>
               <Route index path="/v2/" element={<LoadingPage />} />
               <Route path="/v2/login/" element={<LoginPage updateAccounts={updateAccounts} />} />
-              <Route path="/v2/account/" element={<AccountPage accounts={accounts} updateAccounts={updateAccounts} fetchData={fetchData} /> } />
+              <Route path="/v2/user/" element={<UserHomePage accounts={accounts} updateAccounts={updateAccounts} fetchData={fetchData} /> } />
+              <Route path="/v2/account/" element={<AccountPage /> } />
               <Route index path="/v2/error" element={<ErrorPage r_error={r_error} fetchData={fetchData} />} />
               <Route index path="/" element={<Navigate to="/v2/" />} />
           </Routes>

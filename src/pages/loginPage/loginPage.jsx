@@ -1,6 +1,6 @@
-import {useCallback, useState} from 'react';
+import {useEffect, useState} from 'react';
 import { postApiRequest } from "../../utills/requests";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {InputComponent} from "../../components/InputComponent";
 
 export const LoginPage = (props) => {
@@ -10,6 +10,12 @@ export const LoginPage = (props) => {
     const isFormValid = idValue.length > 0 && passwordValue.length > 0;
     const navigate = useNavigate();
 
+    const location = useLocation()
+
+    useEffect(() => {
+        location.state && location.state.idValue && setIdValue(location.state.idValue)
+    }, []);
+
 
     const onClickLogin = async() => {
         // Проверяем, валидность введенных данных, если все ок - отправляем пользователя на страницу аккаунта
@@ -18,7 +24,7 @@ export const LoginPage = (props) => {
             const response_data = await response.json();
             if (!response_data.error) {
                 props.updateAccounts()
-                navigate('/v2/account');
+                navigate('/v2/user');
             } else {
                 setLoginError(response_data.error);
                 setPasswordValue("");

@@ -25,7 +25,7 @@
   --block-color: hsl(from var(--tg-theme-hint-color) h s l / 0.1);
   --block-color-non-op: var(--tg-theme-section-bg-color);
   --plate-color: hsl(from var(--tg-theme-hint-color) h s l / 0.2);
-  --menu-color: hsl(from var(--tg-theme-header-bg-color) h s l / 0.4);
+  --menu-color: hsl(from var(--tg-theme-header-bg-color) h s l / 0.7);
 
   --font-color: var(--tg-theme-text-color);
   --hint-color: var(--tg-theme-hint-color);
@@ -33,11 +33,14 @@
   /*--thin-border-color: rgba(256,256,256,0.1);*/
   --thin-border-color: hsl(from var(--tg-theme-hint-color) h s l / 0.2);
 
-  --firm-color: rgba(24,154,222,0.2);
+  /*--firm-color: rgba(24,154,222,0.2);*/
+
+  --firm-color: hsl(from var(--tg-theme-button-color) h s l / 0.1);
   --error-color: rgba(222, 24, 24, 0.2);
   --error-color-text: rgba(222, 24, 24, 0.5);
 
-  --story-active-color: rgba(255, 105, 32, 0.8);
+  /*--story-active-color: rgba(255, 105, 32, 0.8);*/
+  --story-active-color: var(--tg-theme-button-color);
   --story-title-color: rgba(10, 10, 10, 0.5);
 }
 
@@ -193,7 +196,11 @@ a {
 }
 
 .vh-100 {
-  height: 100vh;
+  height: var(--tg-viewport-height);
+  transition: 0.5s linear;
+  transition-delay: 0.1s;
+  transition-duration: 0.4s;
+  transition-timing-function: cubic-bezier(.1, .5, .5, .1);
 }
 
 .vh-90 {
@@ -245,6 +252,14 @@ a {
 .hr-padd-20 {
   padding-left: 20px;
   padding-right: 20px;
+}
+
+.bottom-padd-30 {
+  padding-bottom: 30px;
+}
+
+.top-padd-10 {
+  padding-top: 10px;
 }
 
 .vr-margin-10 {
@@ -540,6 +555,7 @@ a {
   max-height: 0;
   overflow: hidden;
   transition: 0.4s ease;
+  z-index: 999;
 }
 
 .container-login.show {
@@ -586,3 +602,40 @@ input::placeholder {
   color: var(--hint-color);
   padding-right: 15px;
 }
+
+
+
+.container-test {
+  position: fixed;
+  /*width: 100%;*/
+  /*height: 100vh;*/
+  z-index: 1;
+}
+
+.overlay-test {
+  box-shadow: 0 0 20px 0 #111;
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  position: fixed;
+  bottom: calc(100% - var(--tg-viewport-height));
+  left: 2%;
+  width: 96%;
+  height: 35%;
+  background: linear-gradient(rgba(127, 127, 127, 0.2), rgba(127, 127, 127, 0.2)), var(--bg-color);
+  /*background-color: var(--bg-color);*/
+  transition: transform 0.5s ease-in-out;
+  transform: translateY(120%);
+}
+
+.overlay-test.visible {
+  transform: translateY(0%);
+}
+
+.swiper-menu {
+  margin: auto;
+  width: 40%;
+  height: 8px;
+  border-radius: 4px;
+  background-color: var(--plate-color);
+}
+

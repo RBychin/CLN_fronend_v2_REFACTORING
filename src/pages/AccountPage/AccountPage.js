@@ -1,14 +1,30 @@
-import {useLocation} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {BlockMain} from "../../components/BlockMain";
 import {ServiceField} from "../../components/ServicesField";
 import {getSpeedLim, getTraffic} from "../../utills/funcs";
+import {useEffect} from "react";
+import {Config} from "../../utills/config";
 
 export const AccountPage = (props) => {
     const location = useLocation()
     const account = location.state.account
     const account_name = location.state.account_name
     const point = location.state.point
+    const navigate = useNavigate()
     console.log(account)
+
+    const onBackClick = () => {
+        navigate(-1)
+    }
+
+    useEffect(() => {
+        Config.tgWindow.BackButton.show()
+        Config.tgWindow.BackButton.onClick(onBackClick)
+        return () => {
+            Config.tgWindow.BackButton.offClick(onBackClick)
+            Config.tgWindow.BackButton.hide()
+        }
+    }, []);
 
 
     return (

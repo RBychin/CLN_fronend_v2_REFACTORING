@@ -6,31 +6,32 @@ import {LoginPage} from "./pages/loginPage/loginPage";
 import {UserHomePage} from "./pages/UserHomePage/UserHomePage";
 import {LoadingPage} from "./pages/LoadingPage/LoadingPage";
 import {ErrorPage} from "./pages/ErrorPage/ErrorPage";
-import {Config} from "./utills/config";
+import {Config, WebUrls} from "./utills/config";
 import {AccountPage} from "./pages/AccountPage/AccountPage";
+import {PaymentPage} from "./pages/PaymentPage/PaymentPage";
 
 function App() {
-
     const navigate = useNavigate();
     const [accounts, setAccounts] = useState(null);
     const [r_error, setError] = useState({text: 'Хьюстон, у нас проблемы...', hint: 'попробуйте позже', code: '500'});
 
     const fetchData = async () => {
         // При запуске приложения проверяем, есть ли у пользователя авторизованные аккаунты
-        navigate('/v2/')
+        navigate(WebUrls.BASE_URL)
         try {
             const response = await getApiRequest('', {});
             if (!response.error && !response.detail) {
                 setAccounts(response);
-                navigate('/v2/user')
+                navigate(WebUrls.UserPage)
+                Config.tgWindow.HapticFeedback.notificationOccurred('success')
             } else {
-                navigate('/v2/login');
+                navigate(WebUrls.LoginPage);
             }
 
         } catch (error) {
             setError(error)
             console.error('TEST Error fetching user:', error);
-            navigate('/v2/error');
+            navigate(WebUrls.ErrorPage);
             }
     };
     const tgTest = async () => {
@@ -40,7 +41,7 @@ function App() {
         tgTest()
         fetchData()
         Config.tgWindow.expand()
-
+        Config.tgWindow.enableClosingConfirmation()
     }, []);
 
 
@@ -53,7 +54,7 @@ function App() {
             }
         } catch (error) {
             setError(error)
-            navigate('/v2/error')
+            navigate(WebUrls.ErrorPage)
             console.error('Error updating accounts:', error);
         }
     };
@@ -61,12 +62,13 @@ function App() {
     return (
       <div className="App">
           <Routes>
-              <Route index path="/v2/" element={<LoadingPage />} />
-              <Route path="/v2/login/" element={<LoginPage updateAccounts={updateAccounts} />} />
-              <Route path="/v2/user/" element={<UserHomePage accounts={accounts} updateAccounts={updateAccounts} fetchData={fetchData} /> } />
-              <Route path="/v2/account/" element={<AccountPage /> } />
-              <Route index path="/v2/error" element={<ErrorPage r_error={r_error} fetchData={fetchData} />} />
-              <Route index path="/" element={<Navigate to="/v2/" />} />
+              <Route index path={WebUrls.BASE_URL} element={<LoadingPage />} />
+              <Route path={WebUrls.LoginPage} element={<LoginPage updateAccounts={updateAccounts} />} />
+              <Route path={WebUrls.UserPage} element={<UserHomePage accounts={accounts} updateAccounts={updateAccounts} fetchData={fetchData} /> } />
+              <Route path={WebUrls.AccountPage} element={<AccountPage /> } />
+              <Route index path={WebUrls.ErrorPage} element={<ErrorPage r_error={r_error} fetchData={fetchData} />} />
+              <Route index path={WebUrls.PaymentPage} element={<PaymentPage />} />
+              <Route index path="/" element={<Navigate to={WebUrls.BASE_URL} />} />
           </Routes>
       </div>
     );

@@ -2,6 +2,7 @@ import {useEffect, useState} from 'react';
 import { postApiRequest } from "../../utills/requests";
 import {useLocation, useNavigate} from "react-router-dom";
 import {InputComponent} from "../../components/InputComponent";
+import {Config, WebUrls} from "../../utills/config";
 
 export const LoginPage = (props) => {
     const [idValue, setIdValue] = useState("");
@@ -12,25 +13,58 @@ export const LoginPage = (props) => {
 
     const location = useLocation()
 
+    const onBackClick = () => {
+        navigate(-1)
+    }
+
     useEffect(() => {
         location.state && location.state.idValue && setIdValue(location.state.idValue)
+        if (location.state && location.state.backButton) {
+            Config.tgWindow.BackButton.show()
+            Config.tgWindow.BackButton.onClick(onBackClick)
+        }
+        Config.tgWindow.MainButton.setText('Войти')
+        return () => {
+            Config.tgWindow.BackButton.offClick(onBackClick)
+            Config.tgWindow.BackButton.hide()
+            Config.tgWindow.MainButton.hide()
+        }
     }, []);
 
 
+    useEffect(() => {
+        Config.tgWindow.MainButton.onClick(onClickLogin)
+        return () => {
+            Config.tgWindow.MainButton.offClick(onClickLogin)
+            Config.tgWindow.BackButton.offClick(() => {navigate( - 1)})
+        };
+    }, [Config.tgWindow, idValue, passwordValue]);
+
+
     const onClickLogin = async() => {
+        Config.tgWindow.MainButton.showProgress()
         // Проверяем, валидность введенных данных, если все ок - отправляем пользователя на страницу аккаунта
         try {
             const response = await postApiRequest('', {}, { pin: +idValue, password: passwordValue });
             const response_data = await response.json();
             if (!response_data.error) {
                 props.updateAccounts()
-                navigate('/v2/user');
+                navigate(WebUrls.UserPage);
             } else {
+                Config.tgWindow.HapticFeedback.notificationOccurred('error')
                 setLoginError(response_data.error);
                 setPasswordValue("");
             }
         } catch (error) {
+        } finally {
+            Config.tgWindow.MainButton.hideProgress()
         }
+    }
+
+    if (isFormValid) {
+        Config.tgWindow.MainButton.show()
+    } else {
+        Config.tgWindow.MainButton.hide()
     }
 
     return (
@@ -61,15 +95,6 @@ export const LoginPage = (props) => {
                             onChange={e => setPasswordValue(e.target.value)}
                             value={passwordValue}
                         />
-
-                        {isFormValid &&
-                            <div className='vr-margin-30'>
-                                <span className='glow' onClick={onClickLogin}>
-                                LOGIN
-                            </span>
-                            </div>
-
-                        }
                     </div>
                 </div>
             </div>

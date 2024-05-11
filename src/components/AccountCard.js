@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {getSpeedLim} from "../utills/funcs";
+import {WebUrls} from "../utills/config";
 
 
 export const AccountCard = (props) => {
@@ -11,7 +12,7 @@ export const AccountCard = (props) => {
     const point = props.point
 
     const onClickAccount = () => {
-        navigate('/v2/account', {state: {account, account_name, point}})
+        navigate(WebUrls.AccountPage, {state: {account, account_name, point}})
     }
 
     const style = props.status?'card vw-70 plate glow bottom-margin-0': 'card vw-70 plate bottom-margin-0 red-glow'

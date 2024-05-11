@@ -5,26 +5,25 @@ import {Button} from "../components/Button";
 import {getApiRequest} from "../utills/requests";
 
 export const PaymentPage = (props) => {
-    const [responseData, setResponseData] = useState(null);
     const [sumValue, setSum] = useState(500);
     const mainButton = Config.tgWindow.MainButton
 
     const getQr = async () => {
-        if (Config.tgWindow.platform !== 'unknown') {
-            mainButton.showProgress()
-        }
+        mainButton.showProgress()
         try {
             const response = await getApiRequest('/pay', {pin: props.point.pin, sum: sumValue });
-            setResponseData(response.text);
+            return response.text;
         } catch (error) {
             console.error('Error fetching data:', error);
+        } finally {
+            mainButton.hideProgress()
         }
-        mainButton.hideProgress()
     }
 
-    const payButtonClick = () => {
-        const Url = responseData.replace(/\?.*$/, '');
-        window.open(Url, '_blank');
+    const payButtonClick = async () => {
+        const qr = await getQr(sumValue)
+        window.open(qr, '_blank');
+        Config.tgWindow.close()
     }
 
     const onChangeSum = (sum) => {
@@ -35,31 +34,23 @@ export const PaymentPage = (props) => {
         setSum(sum)
         if (sum > 9) {
             setSum(sum);
-            getQr(sumValue)
         }
     }
 
     useEffect(() => {
-        if (Config.tgWindow.platform !== 'unknown') {
-            mainButton.text = 'Оплатить'
-            mainButton.show()
-            return () => {
-                mainButton.hide()
-                mainButton.offClick(payButtonClick)
-            }
-        }
+        mainButton.setText('оплатить')
     }, []);
 
     useEffect(() => {
-        mainButton.onClick(payButtonClick);
-
+        if (sumValue && sumValue >= 10) {
+            mainButton.show()
+        } else {
+            mainButton.hide()
+        }
+        mainButton.onClick(payButtonClick)
         return () => {
-            mainButton.offClick(payButtonClick);
+            mainButton.offClick(payButtonClick)
         };
-    }, [responseData]);
-
-    useEffect(() => {
-        getQr()
     }, [sumValue]);
 
 
@@ -84,14 +75,6 @@ export const PaymentPage = (props) => {
                                 onChange={e => onChangeSum(parseInt(e.target.value))}
                                 value={sumValue}
                             />
-                            {sumValue > 9 && responseData && Config.tgWindow.platform === "unknown" &&
-                                <Button
-                                    text="Оплатить"
-                                    onClick={payButtonClick}
-                                    isMain={true}
-                                />
-                            }
-
                         </div>
                     </div>
                     <div className="flex">

@@ -1,11 +1,8 @@
 import {getApiRequest} from "./requests";
-import {Config} from "./config";
 
 export const getTransaction = async () => {
     try {
-        const response = await getApiRequest('/transactions', {});
-        Config.tgWindow.HapticFeedback.notificationOccurred('success')
-        return response
+        return await getApiRequest('/transactions', {})
     } catch (error) {
         console.error('Error fetching data:', error);
     }

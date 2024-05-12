@@ -41,7 +41,7 @@
 
   /*--story-active-color: rgba(255, 105, 32, 0.8);*/
   --story-active-color: var(--tg-theme-button-color);
-  --story-title-color: rgba(10, 10, 10, 0.5);
+  --story-title-color: hsl(from var(--tg-theme-bg-color) h s l / 0.6);
 }
 
 .tg {
@@ -466,6 +466,7 @@ a {
 .story-title {
   background-color: var(--story-title-color);
   font-size: 12px;
+  color: var(--tg-theme-text-color);
   font-weight: 400;
   text-align: left;
   margin: auto;

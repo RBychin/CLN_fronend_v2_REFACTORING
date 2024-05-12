@@ -38,6 +38,7 @@ export const PointCard = ({
     }
 
     const onClickLogout = () => {
+        Config.HapticFeedback.warning()
         Config.tgWindow.showConfirm(
             `Выйти из ${point.pin}?\nЭто так же удалит из приложения все связанные с этим ID аккаунты.`,
             Logout)
@@ -48,7 +49,7 @@ export const PointCard = ({
     return (
         <>
             <div className={style}>
-                <div onClick={() => {setActive(!active)}} className='grid'>
+                <div onClick={() => {setActive(!active);Config.HapticFeedback.soft();}} className='grid'>
                     <img alt='status' className='icon' src={status? iconOk: iconPause} />
                     <span className='left-text hr-padd-10'>
                         <p className='text-weight-500'>{point.pin}</p>
@@ -74,17 +75,17 @@ export const PointCard = ({
                         <AccountCard status={status} account={account} key={index} point={point} />
                     ))}
                     <div className={`grid`}>
-                    <span className='center margin-auto' onClick={() => {setActivePointMenu(point)}}>
+                    <span className='center margin-auto' onClick={() => {setActivePointMenu(point); Config.HapticFeedback.soft()}}>
 
                         <IconSvg icon={'payment'} color={Config.colors.hintColor} style={'icon-small'} size={'20px'} />
                         <p className='hint'>Пополнить</p>
                     </span>
-                        <span className='center margin-auto'>
-                        <a href="#">
-                            <IconSvg icon={'settings'} color={Config.colors.hintColor} style={'icon-small'} size={'20px'} />
-                            <p className='hint'>Настройки</p>
-                        </a>
-                    </span>
+                        {/*<span className='center margin-auto'>*/}
+                        {/*    <a href="#">*/}
+                        {/*        <IconSvg icon={'settings'} color={Config.colors.hintColor} style={'icon-small'} size={'20px'} />*/}
+                        {/*        <p className='hint'>Настройки</p>*/}
+                        {/*    </a>*/}
+                        {/*</span>*/}
                         <span className='center margin-auto' onClick={onClickLogout}>
                         <a href="#">
                         <img alt="icon-small" className='icon-small' src={closeIcon}/>

@@ -23,7 +23,7 @@ function App() {
             if (!response.error && !response.detail) {
                 setAccounts(response);
                 navigate(WebUrls.UserPage)
-                Config.tgWindow.HapticFeedback.notificationOccurred('success')
+                Config.HapticFeedback.success()
             } else {
                 navigate(WebUrls.LoginPage);
             }

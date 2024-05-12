@@ -9,6 +9,16 @@ class WebApp {
             buttonColor: this.tgWindow.themeParams.button_color,
             hintColor: this.tgWindow.themeParams.hint_color
         }
+
+        this.HapticFeedback = {
+            error: () => this.tgWindow.HapticFeedback.notificationOccurred('error'),
+            success: () => this.tgWindow.HapticFeedback.notificationOccurred('success'),
+            warning: () => this.tgWindow.HapticFeedback.notificationOccurred('warning'),
+            light: () => this.tgWindow.HapticFeedback.impactOccurred('light'),
+            medium: () => this.tgWindow.HapticFeedback.impactOccurred('medium'),
+            heavy: () => this.tgWindow.HapticFeedback.impactOccurred('heavy'),
+            soft: () => this.tgWindow.HapticFeedback.impactOccurred('soft')
+        }
     }
 }
 

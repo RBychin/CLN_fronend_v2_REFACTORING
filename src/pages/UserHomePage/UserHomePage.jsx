@@ -22,8 +22,9 @@ export const UserHomePage = (props) => {
     const [user, setUser] = useState(null);
 
     // ============ Всплывающее меню оплаты ===========
+    const defaultSumValue = 500
     const [activePointMenu, setActivePointMenu] = useState(null)
-    const [sumValue, setSumValue] = useState(500);
+    const [sumValue, setSumValue] = useState(defaultSumValue);
     const [sumError, setSumError] = useState(null)
     const mainButton = Config.tgWindow.MainButton
     const overlayRef = useRef()
@@ -31,19 +32,24 @@ export const UserHomePage = (props) => {
     const onClickMainButton = () => {
         if (sumValue < 10) {
             setSumError('Минимальная сумма платежа 10 рублей.')
+            Config.HapticFeedback.error()
             return
         }
         if (sumValue > 10000) {
             setSumError('Максимальная сумма платежа 10 000 рублей.')
+            Config.HapticFeedback.error()
             return
         }
         if (activePointMenu) {
+            Config.HapticFeedback.light()
             navigate(WebUrls.PaymentPage, {state: {point: activePointMenu, sumValue}})
         }
     }
 
     useEffect(() => {
         if (activePointMenu) {
+            setSumError(false)
+            setSumValue(defaultSumValue)
             mainButton.show()
         }
         return () => {
@@ -75,7 +81,7 @@ export const UserHomePage = (props) => {
         getStories().then(r => setStories(r))
         getProfile().then(r => setUser(r));
 
-        mainButton.setText('оплатить')
+        mainButton.setText('Оплатить')
 
         const handleClickOutside = (event) => {
             const overlay = overlayRef.current;
@@ -85,6 +91,7 @@ export const UserHomePage = (props) => {
         };
         document.addEventListener('mousedown', handleClickOutside);
         return () => {
+            mainButton.offClick(onClickMainButton)
             document.removeEventListener('mousedown', handleClickOutside);
         };
     }, []);
@@ -104,12 +111,13 @@ export const UserHomePage = (props) => {
             <>
                 {/*============ Всплывающее меню оплаты ===========*/}
                 <div className="container-test">
-                    <div ref={overlayRef} className={`overlay-test bottom-padd-30 top-padd-10 ${activePointMenu ? "visible" : ""}`}>
+                    <div ref={overlayRef} className={`overlay-test top-padd-10 ${activePointMenu ? "visible" : ""}`}>
                         <PaymentSwipeBlock
                             onChangeSum={onChangeSum}
                             sumValue={sumValue}
                             setSumValue={setSumValue}
                             sumError={sumError}
+                            setSumError={setSumError}
                         />
                     </div>
                 </div>

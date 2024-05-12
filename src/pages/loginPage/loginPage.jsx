@@ -42,6 +42,7 @@ export const LoginPage = (props) => {
 
 
     const onClickLogin = async() => {
+        Config.HapticFeedback.light()
         Config.tgWindow.MainButton.showProgress()
         // Проверяем, валидность введенных данных, если все ок - отправляем пользователя на страницу аккаунта
         try {
@@ -49,9 +50,10 @@ export const LoginPage = (props) => {
             const response_data = await response.json();
             if (!response_data.error) {
                 props.updateAccounts()
+                Config.HapticFeedback.success()
                 navigate(WebUrls.UserPage);
             } else {
-                Config.tgWindow.HapticFeedback.notificationOccurred('error')
+                Config.HapticFeedback.error()
                 setLoginError(response_data.error);
                 setPasswordValue("");
             }

@@ -29,7 +29,7 @@ export const StoriesSwiper = ({ storyList, updateStories }) => {
             updateStories()
         }
         fetchData()
-        Config.tgWindow.HapticFeedback.impactOccurred('light')
+        Config.HapticFeedback.light()
         window.open(url)
     }
 

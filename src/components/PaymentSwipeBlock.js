@@ -4,7 +4,18 @@ import {getApiRequest} from "../utills/requests";
 import {InputComponent} from "./InputComponent";
 import {Button} from "./Button";
 
-export const PaymentSwipeBlock = ({onChangeSum, sumValue, setSumValue, sumError}) => {
+export const PaymentSwipeBlock = ({
+                                      onChangeSum,
+                                      sumValue,
+                                      setSumValue,
+                                      sumError,
+                                      setSumError}) => {
+
+    const handleButtonClick = (value) => {
+        Config.HapticFeedback.light()
+        setSumValue(value);
+        setSumError(false)
+    }
 
 
     return (
@@ -23,7 +34,7 @@ export const PaymentSwipeBlock = ({onChangeSum, sumValue, setSumValue, sumError}
                             {sumError && <p style={{color: 'red'}}>{sumError}</p>}
                             <InputComponent
                                 error={sumError}
-                                type='numeric'
+                                type='text'
                                 placeholder='SUM'
                                 id='sumValue'
                                 inputMode="numeric"
@@ -38,7 +49,7 @@ export const PaymentSwipeBlock = ({onChangeSum, sumValue, setSumValue, sumError}
                                 key={i}
                                 text={item}
                                 onClick={() => {
-                                    setSumValue(item);
+                                    handleButtonClick(item)
                                 }}
                                 isMain={false}
                             />

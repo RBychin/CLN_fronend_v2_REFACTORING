@@ -37,7 +37,7 @@
 
   --firm-color: hsl(from var(--tg-theme-button-color) h s l / 0.1);
   --error-color: rgba(222, 24, 24, 0.2);
-  --error-color-text: rgba(222, 24, 24, 0.5);
+  --error-color-text: rgba(244, 34, 34, 1);
 
   /*--story-active-color: rgba(255, 105, 32, 0.8);*/
   --story-active-color: var(--tg-theme-button-color);

@@ -31,7 +31,7 @@ export const PaymentSwipeBlock = ({
                     </h3>
                     <div className="">
                         <div className="hr-padd-20 vr-margin-30">
-                            {sumError && <p style={{color: 'red'}}>{sumError}</p>}
+                            {sumError && <p style={{color: 'var(--error-color-text)'}}>{sumError}</p>}
                             <InputComponent
                                 error={sumError}
                                 type='text'

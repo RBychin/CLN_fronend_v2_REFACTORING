@@ -59,7 +59,7 @@ export const PointCard = ({
                         {status &&
                             <>
                                 <p><small>Баланс:</small></p>
-                                <p style={{color: +point.balance <= 0 ? "#var(--error-color-text)" : "var(--font-color)"}}
+                                <p style={{color: +point.balance <= 0 ? "var(--error-color-text)" : "var(--font-color)"}}
                                    className='text-weight-700'>
                                     {point.balance.toLocaleString('ru-RU')} ₽
                                 </p>
@@ -71,8 +71,8 @@ export const PointCard = ({
             </div>
             {status && (
                 <div className={`slide-menu vw-65 margin-auto container ${active ? 'show' : ''}`}>
-                {Object.values(point.points).map((account, index) => (
-                        <AccountCard status={status} account={account} key={index} point={point} />
+                {Object.entries(point.points).map(([key, account], index) => (
+                        <AccountCard status={status} account={account} name={key} key={index} point={point} />
                     ))}
                     <div className={`grid`}>
                     <span className='center margin-auto' onClick={() => {setActivePointMenu(point); Config.HapticFeedback.soft()}}>
@@ -80,12 +80,6 @@ export const PointCard = ({
                         <IconSvg icon={'payment'} color={Config.colors.hintColor} style={'icon-small'} size={'20px'} />
                         <p className='hint'>Пополнить</p>
                     </span>
-                        {/*<span className='center margin-auto'>*/}
-                        {/*    <a href="#">*/}
-                        {/*        <IconSvg icon={'settings'} color={Config.colors.hintColor} style={'icon-small'} size={'20px'} />*/}
-                        {/*        <p className='hint'>Настройки</p>*/}
-                        {/*    </a>*/}
-                        {/*</span>*/}
                         <span className='center margin-auto' onClick={onClickLogout}>
                         <a href="#">
                         <img alt="icon-small" className='icon-small' src={closeIcon}/>

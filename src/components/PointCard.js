@@ -35,8 +35,8 @@ export const PointCard = ({
         Config.HapticFeedback.warning()
         Config.tgWindow.showConfirm(
             `Выйти из ${point.pin}?\nЭто так же удалит из приложения все связанные с этим ID аккаунты.`,
-            (r) => {Logout(r, {pin: point.pin}).then(r => {
-                if (r) {
+            (accepted) => {Logout(accepted, {pin: point.pin}).then(() => {
+                if (accepted) {
                     callback()
                     navigate(WebUrls.BASE_URL)
                 }

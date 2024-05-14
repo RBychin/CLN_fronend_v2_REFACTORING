@@ -23,7 +23,8 @@ export const postApiRequest = async (prefix, params_data, data) => {
             headers: {
                 'Authorization': Config.tgWindow.initData,
                 'Content-Type': 'application/json',
-                'ngrok-skip-browser-warning': 'Any'
+                'ngrok-skip-browser-warning': 'Any',
+                'platform': Config.tgWindow.platform,
             },
             body: JSON.stringify(data)
         });

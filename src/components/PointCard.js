@@ -8,6 +8,7 @@ import {getApiRequest} from "../utills/requests";
 import {Config, WebUrls} from "../utills/config";
 import {AccountCard} from "./AccountCard";
 import IconSvg from "./icons/IconSvg";
+import {Logout} from "../utills/getInfo";
 
 
 export const PointCard = ({
@@ -21,27 +22,26 @@ export const PointCard = ({
     const navigate = useNavigate()
     const [active, setActive] = useState(false)
 
+    const onClickSettings = () => {
+        navigate(WebUrls.Settings, {state: {point: point}})
+    }
+
 
     const onClickLogin = (idValue) => {
         navigate(WebUrls.LoginPage, {state: {idValue, backButton:true}})
-    }
-
-    const Logout = async (accepted) => {
-        if (accepted) {
-            const response = await getApiRequest(
-                '/logout',
-                {pin: point.pin},
-            )
-            callback()
-            navigate(WebUrls.BASE_URL)
-        }
     }
 
     const onClickLogout = () => {
         Config.HapticFeedback.warning()
         Config.tgWindow.showConfirm(
             `Выйти из ${point.pin}?\nЭто так же удалит из приложения все связанные с этим ID аккаунты.`,
-            Logout)
+            (r) => {Logout(r, {pin: point.pin}).then(r => {
+                if (r) {
+                    callback()
+                    navigate(WebUrls.BASE_URL)
+                }
+            })})
+
     }
 
 
@@ -53,7 +53,7 @@ export const PointCard = ({
                     <img alt='status' className='icon' src={status? iconOk: iconPause} />
                     <span className='left-text hr-padd-10'>
                         <p className='text-weight-500'>{point.pin}</p>
-                        <p><small>{(Object.keys(point.points).length) > 1 && `Аккаунтов: ${(Object.keys(point.points).length)}`}</small></p>
+                        <p><small>{point.points && (Object.keys(point.points).length) > 1 && `Аккаунтов: ${(Object.keys(point.points).length)}`}</small></p>
                     </span>
                     <span className='right-text'>
                         {status &&
@@ -72,7 +72,7 @@ export const PointCard = ({
             {status && (
                 <div className={`slide-menu vw-65 margin-auto container ${active ? 'show' : ''}`}>
                 {Object.entries(point.points).map(([key, account], index) => (
-                        <AccountCard status={status} account={account} name={key} key={index} point={point} />
+                        <AccountCard status={status} name={key} account={account} key={index} point={point} />
                     ))}
                     <div className={`grid`}>
                     <span className='center margin-auto' onClick={() => {setActivePointMenu(point); Config.HapticFeedback.soft()}}>
@@ -80,6 +80,10 @@ export const PointCard = ({
                         <IconSvg icon={'payment'} color={Config.colors.hintColor} style={'icon-small'} size={'20px'} />
                         <p className='hint'>Пополнить</p>
                     </span>
+                        <span className='center margin-auto' onClick={onClickSettings}>
+                                <IconSvg icon={'settings'} color={Config.colors.hintColor} style={'icon-small'} size={'20px'} />
+                                <p className='hint'>Настройки</p>
+                        </span>
                         <span className='center margin-auto' onClick={onClickLogout}>
                         <a href="#">
                         <img alt="icon-small" className='icon-small' src={closeIcon}/>

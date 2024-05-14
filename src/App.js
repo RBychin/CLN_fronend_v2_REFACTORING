@@ -9,6 +9,7 @@ import {ErrorPage} from "./pages/ErrorPage/ErrorPage";
 import {Config, WebUrls} from "./utills/config";
 import {AccountPage} from "./pages/AccountPage/AccountPage";
 import {PaymentPage} from "./pages/PaymentPage/PaymentPage";
+import {SettingsPage} from "./pages/SettingsPage";
 
 function App() {
     const navigate = useNavigate();
@@ -66,6 +67,7 @@ function App() {
               <Route path={WebUrls.LoginPage} element={<LoginPage updateAccounts={updateAccounts} />} />
               <Route path={WebUrls.UserPage} element={<UserHomePage accounts={accounts} updateAccounts={updateAccounts} fetchData={fetchData} /> } />
               <Route path={WebUrls.AccountPage} element={<AccountPage /> } />
+              <Route path={WebUrls.Settings} element={<SettingsPage /> } />
               <Route index path={WebUrls.ErrorPage} element={<ErrorPage r_error={r_error} fetchData={fetchData} />} />
               <Route index path={WebUrls.PaymentPage} element={<PaymentPage />} />
               <Route index path="/" element={<Navigate to={WebUrls.BASE_URL} />} />

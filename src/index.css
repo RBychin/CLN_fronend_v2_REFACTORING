@@ -316,6 +316,16 @@ a {
   align-items: center;
 }
 
+.align-top {
+  background-color: #007aff;
+  width: 100%;
+  height: 100%;
+}
+
+.width-50pc {
+  width: 70%;
+}
+
 .border-bottom {
   padding-bottom: 7px;
   border-bottom: var(--thin-border-color) solid 1px;

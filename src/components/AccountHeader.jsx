@@ -19,7 +19,7 @@ export const AccountHeader = (props) => {
                             </div>
                         </span>
                          <span className='right-text'>
-                            ...
+
                         </span>
         </div>
     )

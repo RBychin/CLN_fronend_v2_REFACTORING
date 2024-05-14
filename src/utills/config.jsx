@@ -29,6 +29,7 @@ class Urls {
     constructor() {
         this.PaymentPage = this.addBaseUrl('pay');
         this.UserPage = this.addBaseUrl('user');
+        this.Settings = this.addBaseUrl('settings');
         this.LoginPage = this.addBaseUrl('login');
         this.AccountPage = this.addBaseUrl('account');
         this.ErrorPage = this.addBaseUrl('error');

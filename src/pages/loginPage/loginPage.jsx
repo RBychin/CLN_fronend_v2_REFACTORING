@@ -97,9 +97,14 @@ export const LoginPage = (props) => {
                             onChange={e => setPasswordValue(e.target.value)}
                             value={passwordValue}
                         />
+                        <div className='center welcome'>
+                            <span className="glow">
+                                Ваш ID и Пароль вы можете узнать в личном кабинете, либо по телефону:<br/>+7 (495) 640-57-00
+                            </span>
+                        </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </>
+            </>
     );
 };

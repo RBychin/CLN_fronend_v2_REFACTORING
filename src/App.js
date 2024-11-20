@@ -11,6 +11,7 @@ import {AccountPage} from "./pages/AccountPage/AccountPage";
 import {PaymentPage} from "./pages/PaymentPage/PaymentPage";
 import {SettingsPage} from "./pages/SettingsPage";
 
+
 function App() {
     const navigate = useNavigate();
     const [accounts, setAccounts] = useState(null);
@@ -35,12 +36,11 @@ function App() {
             navigate(WebUrls.ErrorPage);
             }
     };
-    const tgTest = async () => {
-    }
 
     useEffect(() => {
-        tgTest()
         fetchData()
+
+        Config.tgWindow && Config.tgWindow.version && Config.tgWindow.version >= 8.0 && Config.tgWindow.requestFullscreen();
         Config.tgWindow.expand()
         Config.tgWindow.enableClosingConfirmation()
     }, []);

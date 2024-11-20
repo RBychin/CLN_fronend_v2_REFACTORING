@@ -1,5 +1,4 @@
 import {getApiRequest, postApiRequest} from "./requests";
-import {WebUrls} from "./config";
 
 export const getTransaction = async () => {
     try {
@@ -34,7 +33,7 @@ export const getProfile = async () => {
 
 export const Logout = async (accepted, data) => {
     if (accepted) {
-        const response = await getApiRequest(
+        await getApiRequest(
             '/logout',
             data,
         )
@@ -57,7 +56,7 @@ export const getPinSettings = async (pin) => {
 
 export const SetNotifications = async (pin, value) => {
 
-    const response = await postApiRequest(
+    await postApiRequest(
         '/settings',
         {},
         {setNotifications: {pin: pin, value: value}}

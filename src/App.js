@@ -15,6 +15,7 @@ import {SettingsPage} from "./pages/SettingsPage";
 function App() {
     const navigate = useNavigate();
     const [accounts, setAccounts] = useState(null);
+    const [associated, setAssociated] = useState(null);
     const [r_error, setError] = useState({text: 'Хьюстон, у нас проблемы...', hint: 'попробуйте позже', code: '500'});
 
     const fetchData = async () => {
@@ -27,6 +28,9 @@ function App() {
                 navigate(WebUrls.UserPage)
                 Config.HapticFeedback.success()
             } else {
+                if (response.associated) {
+                    setAssociated(response.associated);
+                }
                 navigate(WebUrls.LoginPage);
             }
 
@@ -64,7 +68,7 @@ function App() {
       <div className="App">
           <Routes>
               <Route index path={WebUrls.BASE_URL} element={<LoadingPage />} />
-              <Route path={WebUrls.LoginPage} element={<LoginPage updateAccounts={updateAccounts} />} />
+              <Route path={WebUrls.LoginPage} element={<LoginPage updateAccounts={updateAccounts} associated={associated} setAssociated={setAssociated} />} />
               <Route path={WebUrls.UserPage} element={<UserHomePage accounts={accounts} updateAccounts={updateAccounts} fetchData={fetchData} /> } />
               <Route path={WebUrls.AccountPage} element={<AccountPage /> } />
               <Route path={WebUrls.Settings} element={<SettingsPage /> } />

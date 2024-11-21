@@ -1,5 +1,5 @@
 import {useEffect, useState} from 'react';
-import { postApiRequest } from "../../utills/requests";
+import {getApiRequest, postApiRequest} from "../../utills/requests";
 import {useLocation, useNavigate} from "react-router-dom";
 import {InputComponent} from "../../components/InputComponent";
 import {Config, WebUrls} from "../../utills/config";
@@ -38,7 +38,16 @@ export const LoginPage = (props) => {
             Config.tgWindow.MainButton.offClick(onClickLogin)
             Config.tgWindow.BackButton.offClick(() => {navigate( - 1)})
         };
-    }, [Config.tgWindow, idValue, passwordValue]);
+    }, [Config.tgWindow, idValue, passwordValue, props.associated]);
+
+
+    const onClickAssociated = async () => {
+        Config.HapticFeedback.light()
+        await getApiRequest('/link')
+        props.updateAccounts()
+        props.setAssociated(false)
+        navigate(WebUrls.UserPage);
+    }
 
 
     const onClickLogin = async() => {
@@ -102,9 +111,19 @@ export const LoginPage = (props) => {
                                 Ваш ID и Пароль вы можете узнать в личном кабинете, либо по телефону:<br/>+7 (495) 640-57-00
                             </span>
                         </div>
-                        </div>
+                        {props.associated &&
+                            <div className='center welcome'>
+                                <span className="glow">
+                                    У вас есть связанный PIN
+                                </span>
+                                    <div onClick={onClickAssociated}
+                                         className='card vw-45 plate gradient-background glow bottom-margin-0'>{props.associated}<br/>Войти
+                                    </div>
+
+                            </div>}
                     </div>
                 </div>
-            </>
+            </div>
+        </>
     );
 };

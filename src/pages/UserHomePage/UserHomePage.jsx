@@ -150,7 +150,7 @@ export const UserHomePage = (props) => {
                         <div className={`container-login ${login ? 'show' : ''}`}>
                             <div onClick={() => {
                                 navigate(WebUrls.LoginPage, {state: {backButton:true}})
-                            }}>Добавить аккаунт
+                            }}>Добавить PIN
                             </div>
                         </div>
                     </div>

@@ -1,7 +1,6 @@
 .App {
   text-align: center;
   padding-top: var(--tg-content-safe-area-inset-top);
-  padding-bottom: var(--tg-content-safe-area-inset-bottom);
 }
 
 .App-logo {

@@ -214,6 +214,9 @@ a {
 .vh-90 {
   height: 90vh;
 }
+.vh-full {
+  height: calc(80vh - var(--tg-content-safe-area-inset-top) - var(--tg-content-safe-area-inset-bottom));
+}
 
 .vh-30 {
   height: 30vh;
@@ -240,9 +243,6 @@ a {
 }
 
 .vw-65 {
-  width: 65vw;
-}
-.vw-45 {
   width: 65vw;
 }
 

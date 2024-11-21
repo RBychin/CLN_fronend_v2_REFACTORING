@@ -66,16 +66,18 @@ function App() {
 
     return (
       <div className="App">
-          <Routes>
-              <Route index path={WebUrls.BASE_URL} element={<LoadingPage />} />
-              <Route path={WebUrls.LoginPage} element={<LoginPage updateAccounts={updateAccounts} associated={associated} setAssociated={setAssociated} />} />
-              <Route path={WebUrls.UserPage} element={<UserHomePage accounts={accounts} updateAccounts={updateAccounts} fetchData={fetchData} /> } />
-              <Route path={WebUrls.AccountPage} element={<AccountPage /> } />
-              <Route path={WebUrls.Settings} element={<SettingsPage /> } />
-              <Route index path={WebUrls.ErrorPage} element={<ErrorPage r_error={r_error} fetchData={fetchData} />} />
-              <Route index path={WebUrls.PaymentPage} element={<PaymentPage />} />
-              <Route index path="/" element={<Navigate to={WebUrls.BASE_URL} />} />
-          </Routes>
+          <div className='interface'>
+              <Routes>
+                  <Route index path={WebUrls.BASE_URL} element={<LoadingPage />} />
+                  <Route path={WebUrls.LoginPage} element={<LoginPage updateAccounts={updateAccounts} associated={associated} setAssociated={setAssociated} />} />
+                  <Route path={WebUrls.UserPage} element={<UserHomePage accounts={accounts} updateAccounts={updateAccounts} fetchData={fetchData} /> } />
+                  <Route path={WebUrls.AccountPage} element={<AccountPage /> } />
+                  <Route path={WebUrls.Settings} element={<SettingsPage /> } />
+                  <Route index path={WebUrls.ErrorPage} element={<ErrorPage r_error={r_error} fetchData={fetchData} />} />
+                  <Route index path={WebUrls.PaymentPage} element={<PaymentPage />} />
+                  <Route index path="/" element={<Navigate to={WebUrls.BASE_URL} />} />
+              </Routes>
+          </div>
       </div>
     );
 }

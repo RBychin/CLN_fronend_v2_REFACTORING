@@ -4,7 +4,6 @@ import {useState} from "react";
 import plusIcon from '../icons/plus.svg'
 import closeIcon from '../icons/cross-stop.svg'
 import {useNavigate} from "react-router-dom";
-import {getApiRequest} from "../utills/requests";
 import {Config, WebUrls} from "../utills/config";
 import {AccountCard} from "./AccountCard";
 import IconSvg from "./icons/IconSvg";
@@ -71,25 +70,24 @@ export const PointCard = ({
             </div>
             {status && (
                 <div className={`slide-menu vw-65 margin-auto container ${active ? 'show' : ''}`}>
-                {Object.entries(point.points).map(([key, account], index) => (
+                    {Object.entries(point.points).map(([key, account], index) => (
                         <AccountCard status={status} name={key} account={account} key={index} point={point} />
                     ))}
                     <div className={`grid`}>
-                    <span className='center margin-auto' onClick={() => {setActivePointMenu(point); Config.HapticFeedback.soft()}}>
-
-                        <IconSvg icon={'payment'} color={Config.colors.hintColor} style={'icon-small'} size={'20px'} />
-                        <p className='hint'>Пополнить</p>
-                    </span>
+                        <span className='center margin-auto' onClick={() => {setActivePointMenu(point); Config.HapticFeedback.soft()}}>
+                            <IconSvg icon={'payment'} color={Config.colors.hintColor} style={'icon-small'} size={'20px'} />
+                            <p className='hint'>Пополнить</p>
+                        </span>
                         <span className='center margin-auto' onClick={onClickSettings}>
-                                <IconSvg icon={'settings'} color={Config.colors.hintColor} style={'icon-small'} size={'20px'} />
-                                <p className='hint'>Настройки</p>
+                            <IconSvg icon={'settings'} color={Config.colors.hintColor} style={'icon-small'} size={'20px'} />
+                            <p className='hint'>Настройки</p>
                         </span>
                         <span className='center margin-auto' onClick={onClickLogout}>
-                        <a href="#">
-                        <img alt="icon-small" className='icon-small' src={closeIcon}/>
-                        <p className='hint'>Выйти</p>
-                        </a>
-                    </span>
+                            <a href="#">
+                                <img alt="icon-small" className='icon-small' src={closeIcon}/>
+                                <p className='hint'>Выйти</p>
+                            </a>
+                        </span>
                     </div>
                 </div>
             )}

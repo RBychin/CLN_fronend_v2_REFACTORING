@@ -11,7 +11,6 @@ export const AccountPage = (props) => {
     const account_name = location.state.account_name
     const point = location.state.point
     const navigate = useNavigate()
-    console.log(account)
 
     const onBackClick = () => {
         navigate(-1)

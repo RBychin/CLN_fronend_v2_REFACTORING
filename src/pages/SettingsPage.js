@@ -20,9 +20,7 @@ export const SettingsPage = () => {
     }
 
     const onClickNotification = (value) => {
-        SetNotifications(point.pin, value).then(r => {
-            console.log(r)
-            }
+        SetNotifications(point.pin, value).then(r => {}
         )
     }
 
@@ -33,7 +31,6 @@ export const SettingsPage = () => {
     }
 
     const onClickLogout = (telegram_id) => {
-        console.warn(settings.clients)
         Config.HapticFeedback.warning()
         Config.tgWindow.showConfirm(
             `Отвязать этого клиента от учетной записи ${point.pin}? Если вам не известен этот контакт - смените пароль от личного кабинета.`,

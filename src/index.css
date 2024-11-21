@@ -35,7 +35,7 @@
 
   /*--firm-color: rgba(24,154,222,0.2);*/
 
-  --firm-color: hsl(from var(--tg-theme-button-color) h s l / 0.1);
+  --firm-color: hsl(from var(--tg-theme-button-color) h s l / 0.2);
   --error-color: rgba(222, 24, 24, 0.2);
   --error-color-text: rgba(244, 34, 34, 1);
 
@@ -246,6 +246,9 @@ a {
   width: 65vw;
 }
 
+.vw-45 {
+  width: 45vw;
+}
 .vw-15 {
   width: 15vw;
 }
@@ -352,6 +355,10 @@ a {
 
 .left-text {
   text-align: left;
+  flex-grow: 1;
+}
+
+.left, .right {
   flex-grow: 1;
 }
 

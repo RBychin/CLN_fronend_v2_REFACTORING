@@ -22,7 +22,6 @@ export const PaymentPage = (props) => {
         Config.HapticFeedback.light()
         Config.tgWindow.MainButton.showProgress()
         getQr(point.pin, sumValue).then((qr) => {
-            console.warn(qr)
             Config.tgWindow.MainButton.hideProgress()
             Config.HapticFeedback.success()
             Config.tgWindow.openLink(qr)

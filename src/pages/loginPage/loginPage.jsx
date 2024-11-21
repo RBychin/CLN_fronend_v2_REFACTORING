@@ -90,12 +90,26 @@ export const LoginPage = (props) => {
                             <>
                                 <div className='center welcome'>
                                     <div onClick={onClickAssociated}
-                                         className='card vw-45 plate gradient-background glow bottom-margin-0'>Войти c
-                                        PIN<br/>{props.associated}
+                                         className='card vw-70 plate gradient-background glow bottom-margin-0'>
+                                        <div className={"grid"}>
+                                            <span className='left'>
+                                                <IconSvg style={"icon-small"} icon="security" color={Config.colors.buttonColor}
+                                                     size={'40px'}/>
+                                            </span>
+                                            <span className='right left-text'>
+                                                <small>Войти c PIN</small>
+                                                <br/>
+                                                <h3>{props.associated}</h3>
+                                            </span>
+                                        </div>
+
+
                                     </div>
                                 </div>
-                                <div style={{marginTop: 40}} onClick={() => {setLogin(!login)}}
-                                     className='card vw-45 plate gradient-background glow bottom-margin-0'>
+                                <div style={{marginTop: 40}} onClick={() => {
+                                    setLogin(!login)
+                                }}
+                                     className='card vw-70 plate gradient-background glow bottom-margin-0'>
                                     Использовать другой PIN
                                 </div>
                                 <div className={`container-login ${login ? 'show' : ''}`}>
@@ -158,7 +172,7 @@ export const LoginPage = (props) => {
                                     value={passwordValue}
                                 />
                                 <div className='center welcome'>
-                                    <span className="glow">
+                                    <span className="">
                                         Ваш ID и Пароль вы можете узнать в личном кабинете, либо по телефону:<br/>+7 (495) 640-57-00
                                     </span>
                                 </div>

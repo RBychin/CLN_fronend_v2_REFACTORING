@@ -382,7 +382,7 @@ a {
   margin: auto 0;
   width: 30px;
   height: 30px;
-  border: var(--font-color) solid 2px;
+  border: var(--font-color) solid 1px;
   border-radius: 100%;
   object-fit: cover;
 }
